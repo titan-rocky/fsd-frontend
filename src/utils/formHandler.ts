@@ -32,7 +32,7 @@ export default async function formHandler (e: React.SyntheticEvent, formData: Fo
                 const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL||"http://localhost:6969"}/register`, {
                     ...formData, joind: formData["joind"]
                 })
-                console.log(response.data);
+                //console.log(response.data);
                 final({message: response.data.message, flag: response.data.flag})
             } catch (error){
                 alert(error)

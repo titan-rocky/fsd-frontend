@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import React from "react"
 import formHandler from "../utils/formHandler"
 import { FormData, FinalMessage } from "../utils/types"
@@ -34,13 +34,6 @@ export function FormComponent () {
             e.preventDefault();
         }
     }
-
-    useEffect(() => {
-        console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL||"http://localhost:6969"}/`).then(
-            (response) => console.log(response.data)
-        );
-    });
 
     return (
         <form className="grid grid-cols-1 lg:grid-cols-2 place-center min-w-[50vw] gap-x-20 rounded-xl" noValidate 
