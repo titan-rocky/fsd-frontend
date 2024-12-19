@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         className={`${inter} antialiased`}
       >
-        <nav className="bg-accent text-white p-8 md:flex md:items-center md:justify-between">
+        <nav className="bg-accent text-white p-8 md:flex md:items-center md:justify-between h-[15vh]">
             <span className="text-2xl">FSD Task 1</span>
             <div className="text-lg">
                 <Link href="/" className="mr-4 md:mr-0 md:ml-6">Home</Link>

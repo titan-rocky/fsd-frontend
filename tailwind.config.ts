@@ -10,6 +10,7 @@ export default {
     extend: {
       colors: {
           black: "#2e3440",
+          gray: "#4c566a",
           white: "#eceff4",
           snow: "#d8dee9",
           cyan: "#8fbcbb",
@@ -17,7 +18,7 @@ export default {
           red: "#bf616a",
           blue: "#88c0d0",
           purple: "#b48ead",
-          accent: "#4c566a"
+          accent: "#434c5e"
       },
     },
   },

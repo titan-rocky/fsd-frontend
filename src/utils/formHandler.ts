@@ -15,7 +15,8 @@ const formSchema = z.object({
     email: z.string()
         .nonempty({message: "E-Mail cannot be empty"})
         .email({message: "Invalid Email"}),
-    dept: z.string(),
+    dept: z.string()
+        .nonempty({message: "Please select a Department"}),
     phone: z.string()
         .nonempty({message: "Phone number cannot be empty"})
         .length(10,{message: "Invalid phone number"}),

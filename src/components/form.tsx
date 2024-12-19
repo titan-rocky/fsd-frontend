@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import React from "react"
 import formHandler from "../utils/formHandler"
 import { FormData, FinalMessage } from "../utils/types"
+import axios from "axios";
 
 function FinalMessageDisplay(props: FinalMessage){
     if (props.flag==0) return (<span className="text-green font-bold">{props.message}</span>);
@@ -25,12 +26,24 @@ export function FormComponent () {
     const [finalMsg, setFinalMsg] = useState<FinalMessage>({message: "", flag: 0});
 
     const today = new Date().toISOString().split("T")[0]
-    function clearVld(){
-        setFormError(() => new Array(8).fill(""))
+    function clearVld(e:React.SyntheticEvent){
+        const clrRes = confirm("There are unsaved changes. Continue ?");
+        if (clrRes) {
+            setFormError(() => new Array(8).fill(""))
+        } else {
+            e.preventDefault();
+        }
     }
 
+    useEffect(() => {
+        console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
+        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL||"http://localhost:6969"}/`).then(
+            (response) => console.log(response.data)
+        );
+    });
+
     return (
-        <form className="grid grid-cols-1 md:grid-cols-2 place-center min-w-[60vw] rounded-xl" noValidate 
+        <form className="grid grid-cols-1 lg:grid-cols-2 place-center min-w-[50vw] gap-x-20 rounded-xl" noValidate 
             onSubmit={(e:React.SyntheticEvent) => formHandler(e,formData,setFormError,setFinalMsg)}
         >
             <div className="flex flex-col p-6">
@@ -79,13 +92,14 @@ export function FormComponent () {
             </div>
             <div className="flex flex-col p-6">
                 <label htmlFor="dept" className="text-lg text-black">Department <span className="text-red">*</span></label>
-                <select id="dept" 
+                <select id="dept" defaultValue=""
                     className="px-2 py-1 my-1 rounded-lg bg-snow"
                     onChange={
                         (el:React.ChangeEvent<HTMLSelectElement>) => {
                             setFormData((fd) => ({...fd, dept: el.target.value}));
                         }
                 }>
+                    <option value="" className="text-gray" disabled>Select</option>
                     <option value="HR">HR</option>
                     <option value="Engineering">Engineering</option>
                     <option value="Marketting">Marketting</option>
@@ -126,11 +140,11 @@ export function FormComponent () {
                 } />
                 <span className="text-red font-bold my-1">{formError[7]}</span>
             </div>
-            <div className="flex justify-around md:col-span-2 py-10">
+            <div className="flex justify-around lg:col-span-2 py-10">
                 <button type="submit" className="bg-accent rounded-lg px-4 py-2 text-white">Submit</button>
                 <button type="reset" onClick = {clearVld} className="bg-accent rounded-lg px-4 py-2 text-white">Reset</button>
             </div>
-            <div className="flex justify-around md:col-span-2">
+            <div className="flex justify-around lg:col-span-2">
                 <FinalMessageDisplay flag={finalMsg.flag} message={finalMsg.message} />
             </div>
         </form>
